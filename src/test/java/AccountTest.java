@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThrows;
 
 public class AccountTest {
 
-    private final AccountFactory ACCOUNT_FACTORY = AccountFactory.createAccountFactory();
+    private final AccountFactory ACCOUNT_FACTORY = AccountFactory.getAccountFactory();
 
     @Test
     public void testCreatingSingleAccount() {

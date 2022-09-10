@@ -10,7 +10,7 @@ public class AccountCreator implements Runnable {
 
     private static final List<Account> ACCOUNTS = AccountManager.getAccounts();
     private Thread thread;
-    private static final AccountFactory ACCOUNT_FACTORY = AccountFactory.createAccountFactory();
+    private static final AccountFactory ACCOUNT_FACTORY = AccountFactory.getAccountFactory();
     private static final Logger LOGGER = Logger.getLogger(AccountCreator.class.getName());
     private boolean running = true;
 

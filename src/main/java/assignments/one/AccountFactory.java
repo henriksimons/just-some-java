@@ -13,7 +13,7 @@ public class AccountFactory {
     private AccountFactory() {
     }
 
-    public static synchronized AccountFactory createAccountFactory() {
+    public static synchronized AccountFactory getAccountFactory() {
         if (instance == null) {
             instance = new AccountFactory();
         }
