@@ -31,10 +31,6 @@ public class PersonService {
         }
     }
 
-    public Person createPerson(String id) {
-        return new Person(id);
-    }
-
     public Person getPerson(String id) {
         assertIdIsNotNull(id);
         boolean exists = PERSONS.stream().anyMatch(person -> person.getId().equalsIgnoreCase(id));

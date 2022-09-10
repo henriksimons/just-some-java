@@ -26,7 +26,7 @@ public class ApiService {
         try {
             person = personService.getPerson(personId);
         } catch (Exception e) {
-            Person newPerson = personService.createPerson(personId);
+            Person newPerson = Person.builder().id(personId).build();
             personService.savePerson(newPerson);
             person = personService.getPerson(personId);
         }

@@ -6,8 +6,8 @@ public class Person {
 
     private final String id;
 
-    public Person(String id) {
-        this.id = id;
+    public Person(Builder builder) {
+        this.id = builder.id;
     }
 
     @Override
@@ -32,5 +32,23 @@ public class Person {
         return "Person{" +
                 "id='" + id + '\'' +
                 '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        public String id;
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Person build() {
+            return new Person(this);
+        }
     }
 }

@@ -16,7 +16,7 @@ public class AccountService {
     private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
     private static AccountService instance = null;
     private final HashMap<String, Account> ACCOUNTS = new HashMap<>();
-    private final AccountFactory ACCOUNT_FACTORY = AccountFactory.getInstance();
+    private final AccountFactory accountFactory = AccountFactory.getInstance();
 
     private AccountService() {
     }
@@ -32,7 +32,7 @@ public class AccountService {
         assertIdIsNotNull(id);
         assertPersonIsNotNull(person);
         try {
-            Account account = ACCOUNT_FACTORY.createAccount(id);
+            Account account = accountFactory.createAccount(id);
             account.setOwner(person);
             ACCOUNTS.put(account.getId(), account);
             return true;
