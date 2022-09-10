@@ -11,17 +11,17 @@ public class AccountServiceTest {
     private final AccountService accountService = AccountService.getInstance();
     private final PersonService personService = PersonService.getInstance();
     private final Person person = Person.builder().id(PERSON_ID).build();
+    private final String ACCOUNT_ID_1 = "1";
+    private final String ACCOUNT_ID_2 = "2";
 
     @Test
     public void testCreatingAccount() {
-        String accountId = "1";
-        Assert.assertTrue(accountService.createAccount(accountId, person));
+        Assert.assertTrue(accountService.createAccount(ACCOUNT_ID_1, person));
     }
 
     @Test
     public void testCreatingDuplicateAccount() {
-        String accountId = "1";
-        Assert.assertTrue(accountService.createAccount(accountId, person));
-        Assert.assertFalse(accountService.createAccount(accountId, person));
+        Assert.assertTrue(accountService.createAccount(ACCOUNT_ID_2, person));
+        Assert.assertFalse(accountService.createAccount(ACCOUNT_ID_2, person));
     }
 }

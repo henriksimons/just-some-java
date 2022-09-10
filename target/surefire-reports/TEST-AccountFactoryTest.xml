@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="1" failures="0" name="AccountFactoryTest" time="0.028" errors="0" skipped="0">
+<testsuite tests="1" failures="0" name="AccountFactoryTest" time="0.025" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="11.0.11+9-LTS-194"/>
@@ -45,7 +45,7 @@
     <property name="java.class.path" value="C:/Users/FHSI32/apache-maven-3.6.3-bin/apache-maven-3.6.3/boot/plexus-classworlds-2.6.0.jar"/>
     <property name="java.vm.specification.version" value="11"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install -T1C"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean install -U"/>
     <property name="java.home" value="C:\Users\FHSI32\jdk-11.0.11_windows-x64_bin\jdk-11.0.11"/>
     <property name="user.language" value="sv"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -65,5 +65,5 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="AccountFactoryTest" name="test" time="0.028"/>
+  <testcase classname="AccountFactoryTest" name="test" time="0.025"/>
 </testsuite>
