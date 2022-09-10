@@ -21,7 +21,7 @@ public class PersonService {
         return instance;
     }
 
-    public boolean addPerson(Person person) {
+    public boolean savePerson(Person person) {
         assertPersonIsNotNull(person);
         if (PERSONS.contains(person)) {
             return false;
@@ -31,12 +31,16 @@ public class PersonService {
         }
     }
 
+    public Person createPerson(String id) {
+        return new Person(id);
+    }
+
     public Person getPerson(String id) {
         assertIdIsNotNull(id);
         boolean exists = PERSONS.stream().anyMatch(person -> person.getId().equalsIgnoreCase(id));
         if (exists) {
             return PERSONS.stream().filter(person -> person.getId().equalsIgnoreCase(id)).findFirst().orElse(null);
         } else
-            throw new RuntimeException("No such person with id " + id + "exists.");
+            throw new RuntimeException("No such person with id " + id + " exists.");
     }
 }

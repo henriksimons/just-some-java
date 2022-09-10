@@ -47,7 +47,8 @@ public class Account implements Comparable<Account> {
     @Override
     public String toString() {
         return "Account{" +
-                "accountName='" + id + '\'' +
+                "id='" + id + '\'' +
+                ", owner=" + owner +
                 '}';
     }
 }

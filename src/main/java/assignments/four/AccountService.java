@@ -33,6 +33,7 @@ public class AccountService {
         assertPersonIsNotNull(person);
         try {
             Account account = ACCOUNT_FACTORY.createAccount(id);
+            account.setOwner(person);
             ACCOUNTS.put(account.getId(), account);
             return true;
         } catch (Exception e) {
@@ -47,7 +48,7 @@ public class AccountService {
         if (ACCOUNTS.containsKey(key)) {
             return ACCOUNTS.get(key);
         } else {
-            String message = "No such account with id: " + key + "exists.";
+            String message = "No account with id " + key + " exists.";
             LOGGER.warning(message);
             throw new RuntimeException(message);
         }

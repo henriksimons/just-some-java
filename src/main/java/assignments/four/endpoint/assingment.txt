@@ -1,0 +1,15 @@
+REST-gränssnittet ska innehålla endpoints (REST-metoder) för att:
+ hämta en persons samtliga konton
+ hämta ett specifikt konto
+ skapa nytt konto
+
+Skapa zip-fil med all kod. (storlek bör ej överskrida 5MB, ska ej innehålla byggda artefakter och liknande)
+
+Bonusuppgifter:
+ Valideringslogik
+ Loggning
+ Endpoints:
+o hämta transaktioner till ett specifikt konto
+o filtrera transaktioner på fromDate och toDate
+ Lägg till integrationstest
+ Swagger-annoteringar
