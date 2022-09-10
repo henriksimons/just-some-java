@@ -1,60 +1,89 @@
 package assignments.two;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.logging.Logger;
 
 public class DateFormatter {
 
     private static final int DATE_STRING_ACCEPTED_LENGTH = 8;
     private static final Logger LOGGER = Logger.getLogger(DateFormatter.class.getName());
+    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.BASIC_ISO_DATE;
 
     public DateFormatter() {
     }
 
     public static String formatDate(String date) {
 
-        if (date == null || date.isBlank()) {
-            LOGGER.warning("Can not format parameter date to LocalDate. Parameter is null or empty!");
-            throw new RuntimeException("Can not format parameter date to LocalDate. Parameter is null or empty!");
-        }
-        String dateStringNoBackSlash = date.replaceAll("[/]", "");
+        String inputNoBackslash = verifyPreConditions(date);
 
-        if (dateStringNoBackSlash.length() != DATE_STRING_ACCEPTED_LENGTH) {
-            LOGGER.warning("Can not format date to LocalDate. Parameter must follow pattern ^([0-9]+(/[0-9]+)+)$");
-            throw new RuntimeException("Can not format date to LocalDate. Parameter must follow pattern ^([0-9]+(/[0-9]+)+)$");
-        }
+        String day = inputNoBackslash.substring(0, 2);
+        String month = inputNoBackslash.substring(2, 4);
+        String year = inputNoBackslash.substring(4, 8);
 
+        LocalDate formattedDate;
+        formattedDate = parseDate(day, month, year);
+        return formattedDate.toString();
+    }
+
+    private static String verifyPreConditions(String input) {
+
+        verifyInputIsNotNull(input);
+
+        verifyInputIsNotBlank(input);
+
+        String inputNoBackslashes = input.replaceAll("[/]", "");
+
+        verifyInputIsCorrectLength(inputNoBackslashes);
+
+        verifyInputIsDigits(inputNoBackslashes);
+
+        return inputNoBackslashes;
+    }
+
+    private static LocalDate parseDate(String day, String month, String year) {
+        LocalDate date;
+        try {
+            date = LocalDate.parse(year + month + day, dateTimeFormatter);
+        } catch (DateTimeParseException e) {
+            LOGGER.warning(e.getMessage());
+            throw new RuntimeException(e.getMessage());
+        }
+        return date;
+    }
+
+    private static void verifyInputIsNotNull(String input) {
+        if (input == null) {
+            String message = "Can not format parameter date to LocalDate. Parameter is null!";
+            LOGGER.warning(message);
+            throw new NullPointerException(message);
+        }
+    }
+
+    private static void verifyInputIsNotBlank(String input) {
+        if (input.isBlank()) {
+            String message = "Can not format parameter date to LocalDate. Parameter is empty!";
+            LOGGER.warning(message);
+            throw new RuntimeException(message);
+        }
+    }
+
+    private static void verifyInputIsCorrectLength(String inputNoBackslash) {
+        if (inputNoBackslash.length() != DATE_STRING_ACCEPTED_LENGTH) {
+            String message = "Can not format date to LocalDate. Parameter must follow pattern ^([0-9]+(/[0-9]+)+)$ / (dd/MM/YYYY)";
+            LOGGER.warning(message);
+            throw new RuntimeException(message);
+        }
+    }
+
+    private static void verifyInputIsDigits(String dateStringNoBackSlash) {
         for (int i = 0; i < dateStringNoBackSlash.length(); i++) {
-            Character character = dateStringNoBackSlash.charAt(i);
+            char character = dateStringNoBackSlash.charAt(i);
             boolean isDigit = Character.isDigit(character);
             if (!isDigit) {
                 throw new RuntimeException("Can not format date to LocalDate. Character at index: " + i + " is not a digit!");
             }
         }
-
-        //30129999
-        String day = dateStringNoBackSlash.substring(0, 2);
-        isWithinLogicalBoundaries(day, DATE.DAY);
-        String month = dateStringNoBackSlash.substring(2, 4);
-        isWithinLogicalBoundaries(month, DATE.MONTH);
-        String year = dateStringNoBackSlash.substring(4, 8);
-
-        return LocalDate.of(toInteger(year), toInteger(month), toInteger(day)).toString();
     }
-
-    private static boolean isWithinLogicalBoundaries(String dateEntity, DATE bounds) {
-        int dayAsInt = Integer.parseInt(dateEntity);
-        boolean valid = dayAsInt >= bounds.getFirst() && dayAsInt <= bounds.getLast();
-        if (!valid) {
-            LOGGER.warning("Invalid date :" + dateEntity + ". Must be between " + bounds.getFirst() + " and " + bounds.getLast() + ".");
-            throw new RuntimeException("Invalid date: " + dateEntity + ". Must be between " + bounds.getFirst() + " and " + bounds.getLast() + ".");
-        }
-        return true;
-    }
-
-
-    private static Integer toInteger(String str) {
-        return Integer.parseInt(str);
-    }
-
 }

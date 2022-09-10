@@ -31,4 +31,11 @@ public class Account implements Comparable<Account> {
     public int compareTo(Account o) {
         return o.getAccountName().compareTo(this.getAccountName());
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountName='" + accountName + '\'' +
+                '}';
+    }
 }

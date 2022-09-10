@@ -1,26 +1,24 @@
 package assignments.one;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.logging.Logger;
 
 public class AccountFactory {
 
     private static final Logger LOGGER = Logger.getLogger(AccountFactory.class.getName());
-    private static final List<String> createdAccounts = new ArrayList<>();
-    private static int instances = 0;
+    private static final HashSet<String> createdAccounts = new HashSet<>();
+    private static AccountFactory instance = null;
 
-    private AccountFactory(int init) {
-        instances = init;
+    private AccountFactory() {
     }
 
-    public static AccountFactory createAccountFactory() {
-        if (instances == 0) {
-            return new AccountFactory(1);
-        } else
-            LOGGER.warning("One instance of AccountFactory already exists. Can not create a duplicate!");
-        throw new RuntimeException("Can not create more than one AccountFactory.");
+    public static synchronized AccountFactory createAccountFactory() {
+        if (instance == null) {
+            instance = new AccountFactory();
+        }
+        return instance;
     }
+
 
     public Account createAccount(String name) {
         if (name == null || name.isBlank()) {

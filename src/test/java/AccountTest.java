@@ -17,7 +17,6 @@ public class AccountTest {
 
     @Test
     public void testDuplicateAccount() {
-        Account account = ACCOUNT_FACTORY.createAccount("123");
         assertThrows(RuntimeException.class, () -> ACCOUNT_FACTORY.createAccount("123"));
     }
 
