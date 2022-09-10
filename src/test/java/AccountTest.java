@@ -7,12 +7,12 @@ import static org.junit.Assert.assertThrows;
 
 public class AccountTest {
 
-    private final AccountFactory ACCOUNT_FACTORY = AccountFactory.getAccountFactory();
+    private final AccountFactory ACCOUNT_FACTORY = AccountFactory.getInstance();
 
     @Test
     public void testCreatingSingleAccount() {
         Account account = ACCOUNT_FACTORY.createAccount("123");
-        Assert.assertEquals(account.getAccountName(), "123");
+        Assert.assertEquals(account.getId(), "123");
     }
 
     @Test

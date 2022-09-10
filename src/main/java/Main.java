@@ -1,10 +1,5 @@
-import assignments.one.Account;
 import assignments.three.AccountCreator;
-import assignments.three.AccountManager;
 import assignments.three.AccountReader;
-
-import java.util.List;
-import java.util.logging.Logger;
 
 public class Main {
 

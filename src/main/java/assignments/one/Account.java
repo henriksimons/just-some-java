@@ -1,13 +1,24 @@
 package assignments.one;
 
+import assignments.four.Person;
+
 import java.util.Objects;
 
 public class Account implements Comparable<Account> {
 
-    private final String accountName;
+    private final String id;
+    private Person owner; //Assuming every account must be owned by someone.
 
     public Account(String accountName) {
-        this.accountName = accountName;
+        this.id = accountName;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
     @Override
@@ -15,27 +26,28 @@ public class Account implements Comparable<Account> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Account account = (Account) o;
-        return Objects.equals(getAccountName(), account.getAccountName());
+        return Objects.equals(getId(), account.getId());
     }
 
-    public String getAccountName() {
-        return accountName;
+
+    public String getId() {
+        return id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAccountName());
+        return Objects.hash(getId());
     }
 
     @Override
     public int compareTo(Account o) {
-        return o.getAccountName().compareTo(this.getAccountName());
+        return o.getId().compareTo(this.getId());
     }
 
     @Override
     public String toString() {
         return "Account{" +
-                "accountName='" + accountName + '\'' +
+                "accountName='" + id + '\'' +
                 '}';
     }
 }

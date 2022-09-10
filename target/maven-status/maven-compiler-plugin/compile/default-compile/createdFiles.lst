@@ -1,7 +1,11 @@
+assignments\four\Person.class
 Main.class
 assignments\one\AccountFactory.class
+assignments\four\Util.class
 assignments\two\DateFormatter.class
+assignments\four\AccountService.class
 assignments\three\AccountManager.class
+assignments\four\PersonService.class
 assignments\three\AccountReader.class
 assignments\one\Account.class
 assignments\three\AccountCreator.class

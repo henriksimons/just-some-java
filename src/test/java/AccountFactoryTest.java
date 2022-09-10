@@ -7,8 +7,8 @@ public class AccountFactoryTest {
 
     @Test
     public void test() {
-        AccountFactory factory = AccountFactory.getAccountFactory();
-        AccountFactory factory2 = AccountFactory.getAccountFactory();
+        AccountFactory factory = AccountFactory.getInstance();
+        AccountFactory factory2 = AccountFactory.getInstance();
         assertEquals(factory, factory2);
     }
 }
