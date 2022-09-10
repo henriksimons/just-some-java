@@ -16,7 +16,7 @@ public class DateFormatter {
 
     public static String formatDate(String date) {
 
-        String inputNoBackslash = verifyPreConditions(date);
+        String inputNoBackslash = assertPreConditions(date);
 
         String day = inputNoBackslash.substring(0, 2);
         String month = inputNoBackslash.substring(2, 4);
@@ -27,18 +27,15 @@ public class DateFormatter {
         return formattedDate.toString();
     }
 
-    private static String verifyPreConditions(String input) {
+    private static String assertPreConditions(String input) {
 
-        verifyInputIsNotNull(input);
-
-        verifyInputIsNotBlank(input);
+        assertInputIsNotNull(input);
+        assertInputIsNotBlank(input);
 
         String inputNoBackslashes = input.replaceAll("[/]", "");
 
-        verifyInputIsCorrectLength(inputNoBackslashes);
-
-        verifyInputIsDigits(inputNoBackslashes);
-
+        assertInputIsCorrectLength(inputNoBackslashes);
+        assertInputIsDigits(inputNoBackslashes);
         return inputNoBackslashes;
     }
 
@@ -53,7 +50,7 @@ public class DateFormatter {
         return date;
     }
 
-    private static void verifyInputIsNotNull(String input) {
+    private static void assertInputIsNotNull(String input) {
         if (input == null) {
             String message = "Can not format parameter date to LocalDate. Parameter is null!";
             LOGGER.warning(message);
@@ -61,7 +58,7 @@ public class DateFormatter {
         }
     }
 
-    private static void verifyInputIsNotBlank(String input) {
+    private static void assertInputIsNotBlank(String input) {
         if (input.isBlank()) {
             String message = "Can not format parameter date to LocalDate. Parameter is empty!";
             LOGGER.warning(message);
@@ -69,7 +66,7 @@ public class DateFormatter {
         }
     }
 
-    private static void verifyInputIsCorrectLength(String inputNoBackslash) {
+    private static void assertInputIsCorrectLength(String inputNoBackslash) {
         if (inputNoBackslash.length() != DATE_STRING_ACCEPTED_LENGTH) {
             String message = "Can not format date to LocalDate. Parameter must follow pattern ^([0-9]+(/[0-9]+)+)$ / (dd/MM/YYYY)";
             LOGGER.warning(message);
@@ -77,7 +74,7 @@ public class DateFormatter {
         }
     }
 
-    private static void verifyInputIsDigits(String dateStringNoBackSlash) {
+    private static void assertInputIsDigits(String dateStringNoBackSlash) {
         for (int i = 0; i < dateStringNoBackSlash.length(); i++) {
             char character = dateStringNoBackSlash.charAt(i);
             boolean isDigit = Character.isDigit(character);

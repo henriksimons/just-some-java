@@ -11,6 +11,4 @@ public class AccountFactoryTest {
         AccountFactory factory2 = AccountFactory.createAccountFactory();
         assertEquals(factory, factory2);
     }
-
-
 }

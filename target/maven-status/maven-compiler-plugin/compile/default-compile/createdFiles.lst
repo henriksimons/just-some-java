@@ -1,7 +1,7 @@
 Main.class
 assignments\one\AccountFactory.class
 assignments\two\DateFormatter.class
-assignments\three\Accounts.class
+assignments\three\AccountManager.class
 assignments\three\AccountReader.class
 assignments\one\Account.class
 assignments\three\AccountCreator.class

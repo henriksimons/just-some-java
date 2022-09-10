@@ -8,8 +8,22 @@ import java.util.logging.Logger;
 public class AccountReader implements Runnable {
 
     private static final List<Account> ACCOUNTS = AccountManager.getAccounts();
+    private Thread thread;
     private static final Logger LOGGER = Logger.getLogger(AccountReader.class.getName());
     private boolean running = true;
+
+    public void start() {
+        thread = new Thread(this);
+        thread.start();
+    }
+
+    public void stop() {
+        running = false;
+    }
+
+    public void kill() {
+        thread.stop();
+    }
 
     @Override
     public void run() {
@@ -24,13 +38,5 @@ public class AccountReader implements Runnable {
                 index++;
             }
         }
-    }
-
-    public boolean isRunning() {
-        return running;
-    }
-
-    public void setRunning(boolean running) {
-        this.running = running;
     }
 }
