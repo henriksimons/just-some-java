@@ -1,5 +1,6 @@
 AccountFactoryTest.class
 DateFormatterTest.class
+PersonServiceTest.class
 AccountManagerTest.class
 AccountServiceTest.class
 AccountTest.class

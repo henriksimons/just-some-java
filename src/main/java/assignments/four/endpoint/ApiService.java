@@ -1,16 +1,14 @@
 package assignments.four.endpoint;
 
-import assignments.four.AccountService;
-import assignments.four.Person;
-import assignments.four.PersonService;
+import assignments.four.*;
 import assignments.one.Account;
 
 import java.util.Set;
 
 public class ApiService {
 
-    private final AccountService accountService = AccountService.getInstance();
-    private final PersonService personService = PersonService.getInstance();
+    private final AccountService accountService = AccountServiceImpl.getInstance();
+    private final PersonService personService = PersonServiceImpl.getInstance();
 
     public Set<Account> getAccounts(String personId) {
         Person person = personService.getPerson(personId);

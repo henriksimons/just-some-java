@@ -10,8 +10,10 @@ assignments\four\PersonService.class
 assignments\four\endpoint\Api.class
 assignments\four\endpoint\ApiService.class
 assignments\four\Person.class
+assignments\four\PersonServiceImpl.class
 Main.class
 assignments\four\endpoint\GetPersonRequestModel.class
+assignments\four\AccountServiceImpl.class
 assignments\three\AccountReader.class
 assignments\four\endpoint\GetAccountRequestModel.class
 assignments\one\Account.class
