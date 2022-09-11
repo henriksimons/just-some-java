@@ -11,8 +11,9 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.Set;
 
-public class Api {
-    public static void main(String[] args) throws IOException {
+public class RestService {
+
+    public static void start() throws IOException {
 
         ApiService apiService = new ApiService();
 

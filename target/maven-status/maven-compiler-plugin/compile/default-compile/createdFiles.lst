@@ -2,12 +2,13 @@ assignments\four\endpoint\HttpMethod.class
 assignments\one\AccountFactory.class
 assignments\four\Util.class
 assignments\four\endpoint\CreateAccountRequestModel.class
+assignments\four\endpoint\RestService.class
 assignments\two\DateFormatter.class
+assignments\three\AccountReader2.class
 assignments\four\AccountService.class
 assignments\three\AccountManager.class
 assignments\four\Person$Builder.class
 assignments\four\PersonService.class
-assignments\four\endpoint\Api.class
 assignments\four\endpoint\ApiService.class
 assignments\four\Person.class
 assignments\four\PersonServiceImpl.class

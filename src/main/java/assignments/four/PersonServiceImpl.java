@@ -1,14 +1,15 @@
 package assignments.four;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.logging.Logger;
 
 import static assignments.four.Util.assertIdIsNotNull;
-import static assignments.four.Util.assertPersonIsNotNull;
+import static assignments.four.Util.assertPersonId;
 
 public class PersonServiceImpl implements PersonService {
 
-    private static final Set<Person> PERSONS = new HashSet<>();
+    private static final Logger LOGGER = Logger.getLogger(PersonServiceImpl.class.getName());
+    private static final HashMap<String, Person> PERSONS_BY_ID = new HashMap<>();
     private static PersonServiceImpl instance = null;
 
     private PersonServiceImpl() {
@@ -23,11 +24,12 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public boolean savePerson(Person person) {
-        assertPersonIsNotNull(person);
-        if (PERSONS.contains(person)) {
+        assertPersonId(person);
+        String key = person.getId();
+        if (PERSONS_BY_ID.containsKey(key)) {
             return false;
         } else {
-            PERSONS.add(person);
+            PERSONS_BY_ID.put(key, person);
             return true;
         }
     }
@@ -35,10 +37,22 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person getPerson(String id) {
         assertIdIsNotNull(id);
-        boolean exists = PERSONS.stream().anyMatch(person -> person.getId().equalsIgnoreCase(id));
+        boolean exists = PERSONS_BY_ID.containsKey(id);
         if (exists) {
-            return PERSONS.stream().filter(person -> person.getId().equalsIgnoreCase(id)).findFirst().orElse(null);
+            return PERSONS_BY_ID.get(id);
         } else
-            throw new RuntimeException("No such person with id " + id + " exists.");
+            throw new RuntimeException("No person with id " + id + " exists.");
+    }
+
+    @Override
+    public boolean deletePerson(String id) {
+        assertIdIsNotNull(id);
+        boolean exists = PERSONS_BY_ID.containsKey(id);
+        if (exists) {
+            PERSONS_BY_ID.remove(id); //What to do with accounts?
+            return true;
+        } else
+            LOGGER.warning("No person with id " + id + " exists to delete.");
+        return false;
     }
 }

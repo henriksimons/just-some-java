@@ -2,6 +2,8 @@ package assignments.four;
 
 import assignments.one.Account;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 public interface AccountService {
@@ -10,4 +12,8 @@ public interface AccountService {
     Account getAccount(String id);
 
     Set<Account> getAccounts(Person person);
+
+    boolean deleteAccount(String id);
+
+    List<Account> getAllAccounts();
 }

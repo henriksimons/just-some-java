@@ -4,12 +4,10 @@ import assignments.one.Account;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class AccountManager {
 
-    private static final Logger LOGGER = Logger.getLogger(AccountManager.class.getName());
-    private static final List<Account> ACCOUNTS = new ArrayList<>();
+    private final List<Account> accounts = new ArrayList<>();
     private static AccountManager instance = null;
 
     private AccountManager() {
@@ -22,7 +20,7 @@ public class AccountManager {
         return instance;
     }
 
-    public static List<Account> getAccounts() {
-        return ACCOUNTS;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 }

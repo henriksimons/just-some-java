@@ -3,8 +3,7 @@ package assignments.four;
 import assignments.one.Account;
 import assignments.one.AccountFactory;
 
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -15,7 +14,7 @@ public class AccountServiceImpl implements AccountService {
 
     private static final Logger LOGGER = Logger.getLogger(AccountServiceImpl.class.getName());
     private static AccountService instance = null;
-    private final HashMap<String, Account> ACCOUNTS = new HashMap<>();
+    private final HashMap<String, Account> ACCOUNTS_BY_ID = new HashMap<>();
     private final AccountFactory accountFactory = AccountFactory.getInstance();
 
     private AccountServiceImpl() {
@@ -35,7 +34,7 @@ public class AccountServiceImpl implements AccountService {
         try {
             Account account = accountFactory.createAccount(id);
             account.setOwner(person);
-            ACCOUNTS.put(account.getId(), account);
+            ACCOUNTS_BY_ID.put(account.getId(), account);
             return true;
         } catch (Exception e) {
             LOGGER.warning(e.getMessage());
@@ -47,8 +46,8 @@ public class AccountServiceImpl implements AccountService {
     public Account getAccount(String id) {
         assertIdIsNotNull(id);
         String key = id.trim().toLowerCase();
-        if (ACCOUNTS.containsKey(key)) {
-            return ACCOUNTS.get(key);
+        if (ACCOUNTS_BY_ID.containsKey(key)) {
+            return ACCOUNTS_BY_ID.get(key);
         } else {
             String message = "No account with id " + key + " exists.";
             LOGGER.warning(message);
@@ -59,8 +58,31 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Set<Account> getAccounts(Person person) {
         assertPersonIsNotNull(person);
-        return ACCOUNTS.values().stream()
+        return ACCOUNTS_BY_ID.values().stream()
                 .filter(account -> account.getOwner().equals(person))
                 .collect(Collectors.toUnmodifiableSet());
+    }
+
+    @Override
+    public boolean deleteAccount(String id) {
+        assertIdIsNotNull(id);
+        boolean exists = ACCOUNTS_BY_ID.containsKey(id);
+        if (exists) {
+            ACCOUNTS_BY_ID.remove(id); //What to do with accounts?
+            return true;
+        } else
+            LOGGER.warning("No account with id " + id + " exists to delete.");
+        return false;
+    }
+
+    /**
+     * Returns a copy.
+     */
+    @Override
+    public List<Account> getAllAccounts() {
+        if (ACCOUNTS_BY_ID.isEmpty()) {
+            return Collections.emptyList();
+        } else
+            return Collections.synchronizedList(new ArrayList<>(ACCOUNTS_BY_ID.values()));
     }
 }

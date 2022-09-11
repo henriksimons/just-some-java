@@ -2,22 +2,24 @@ package assignments.three;
 
 import assignments.one.Account;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class AccountReader implements Runnable {
+public class AccountReader2 implements Runnable {
 
+    private static final Logger LOGGER = Logger.getLogger(AccountReader2.class.getName());
+    private final List<Account> accounts;
+    private boolean running;
     private Thread thread;
-    private static final Logger LOGGER = Logger.getLogger(AccountReader.class.getName());
-    private boolean running = true;
 
-    public AccountReader() {
+    public AccountReader2(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public void start() {
         thread = new Thread(this);
         thread.start();
+        running = true;
     }
 
     public void stop() {
@@ -30,11 +32,10 @@ public class AccountReader implements Runnable {
 
     @Override
     public void run() {
-        LOGGER.info("Running AccountReader on thread: " + Thread.currentThread().getName());
-        List<Account> accounts = Collections.synchronizedList(AccountManager.getInstance().getAccounts());
-        while (running) {
+        LOGGER.info("Running AccountReader2 on thread: " + Thread.currentThread().getName());
+        while (true) {
             synchronized (accounts) {
-                LOGGER.info("Accounts size = " + accounts.size());
+                LOGGER.info("Accounts size: " + accounts.size());
             }
             sleep();
         }
@@ -42,10 +43,11 @@ public class AccountReader implements Runnable {
 
     private void sleep() {
         try {
-            Thread.sleep(500);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
 
 }
