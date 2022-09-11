@@ -17,6 +17,7 @@ public class AccountReader implements Runnable {
 
     public void start() {
         thread = new Thread(this);
+        thread.setName("AccountReaderThread-1");
         thread.start();
     }
 
@@ -32,20 +33,16 @@ public class AccountReader implements Runnable {
     public void run() {
         LOGGER.info("Running AccountReader on thread: " + Thread.currentThread().getName());
         List<Account> accounts = Collections.synchronizedList(AccountManager.getInstance().getAccounts());
+        int indexToGet = 0;
         while (running) {
             synchronized (accounts) {
-                LOGGER.info("Accounts size = " + accounts.size());
+                if (!accounts.isEmpty()) {
+                    if (indexToGet < accounts.size()) {
+                        Account account = accounts.get(indexToGet++);
+                        LOGGER.info("Account " + account + " added!");
+                    }
+                }
             }
-            sleep();
         }
     }
-
-    private void sleep() {
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

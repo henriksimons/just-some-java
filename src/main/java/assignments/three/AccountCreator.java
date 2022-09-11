@@ -19,6 +19,7 @@ public class AccountCreator implements Runnable {
 
     public void start() {
         thread = new Thread(this);
+        thread.setName("AccountCreatorThread-1");
         thread.start();
     }
 
