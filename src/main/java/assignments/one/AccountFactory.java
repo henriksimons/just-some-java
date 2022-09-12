@@ -1,5 +1,7 @@
 package assignments.one;
 
+import assignments.four.Person;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -20,22 +22,26 @@ public class AccountFactory {
         return instance;
     }
 
-    public Account createAccount(String name) {
+    /**
+     * As assignment one only requires an account to have an Id. No assertions for {@link assignments.four.Person} is made.
+     */
+    public Account createAccount(String name, Person person) {
 
         assertNotBlankOrNull(name);
 
         String nameTrimmedToLowercase = name.trim().toLowerCase();
 
         synchronized (createdAccounts) {
-            if (createdAccounts.contains(new Account(nameTrimmedToLowercase))) {
+            Account account = Account.builder().id(nameTrimmedToLowercase).owner(person).build();
+            if (createdAccounts.contains(account)) {
                 String message = "Account " + nameTrimmedToLowercase + " already exists. Can not create a duplicate!";
                 LOGGER.warning(message);
                 throw new RuntimeException(message);
             } else {
-                createdAccounts.add(new Account(nameTrimmedToLowercase));
+                createdAccounts.add(account);
                 String message = "Creating new account with name: " + nameTrimmedToLowercase;
                 LOGGER.info(message);
-                return new Account(name);
+                return account;
             }
         }
     }

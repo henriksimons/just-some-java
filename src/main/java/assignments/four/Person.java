@@ -6,7 +6,11 @@ public class Person {
 
     private final String id;
 
-    public Person(Builder builder) {
+    private Person(Builder builder) {
+        Objects.requireNonNull(builder);
+        if (builder.id == null) {
+            throw new IllegalArgumentException("Parameter Id can not be null when creating a new person.");
+        }
         this.id = builder.id;
     }
 

@@ -8,24 +8,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 
-public class Util {
+public class Utils {
 
     private static final Gson parser = new Gson();
-
-    public static String formatPersonId(String id) {
-        assertIdIsNotNull(id);
-
-        String idNoSeparators = id.trim().replaceAll("-\\s+", "");
-
-        char[] formattedIdCharArray = idNoSeparators.toCharArray();
-
-        for (int i = 0; i < formattedIdCharArray.length; i++) {
-            if (!Character.isDigit(formattedIdCharArray[i])) {
-                throw new RuntimeException("Person id can only consist of digits.");
-            }
-        }
-        return String.valueOf(formattedIdCharArray);
-    }
 
     public static void assertPersonIsNotNull(Person person) {
         if (person == null) {

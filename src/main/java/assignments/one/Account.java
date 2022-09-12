@@ -7,18 +7,20 @@ import java.util.Objects;
 public class Account implements Comparable<Account> {
 
     private final String id;
-    private Person owner; //Assuming every account must be owned by someone. Not added to constructor due to earlier assignments.
+    private final Person owner; //Assuming every account must be owned by someone. Not required by constructor due to earlier assignments.
 
-    public Account(String accountName) {
-        this.id = accountName;
+    protected Account(Builder builder) {
+        Objects.requireNonNull(builder);
+        if (builder.id == null) {
+            throw new IllegalArgumentException("Parameter id can not be empty when creating a new account");
+        } else {
+            this.id = builder.id;
+            this.owner = builder.owner;
+        }
     }
 
     public Person getOwner() {
         return owner;
-    }
-
-    public void setOwner(Person owner) {
-        this.owner = owner;
     }
 
     @Override
@@ -50,5 +52,29 @@ public class Account implements Comparable<Account> {
                 "id='" + id + '\'' +
                 ", owner=" + owner +
                 '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+
+        public String id;
+        public Person owner;
+
+        public Builder id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder owner(Person owner) {
+            this.owner = owner;
+            return this;
+        }
+
+        public Account build() {
+            return new Account(this);
+        }
     }
 }

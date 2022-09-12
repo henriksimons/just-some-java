@@ -1,7 +1,6 @@
 import assignments.four.endpoint.ApiServlet;
 import assignments.three.AccountCreator;
-import assignments.three.AccountReader;
-import assignments.three.AccountReader2;
+import assignments.four.AccountReader;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -19,15 +18,15 @@ public class Main {
 
         //assignmentThree();
 
-        AccountReader2 accountReader2 = new AccountReader2();
-        accountReader2.start();
+        AccountReader accountReader = new AccountReader();
+        accountReader.start();
     }
 
     private static void assignmentThree() {
 
         AccountCreator creator = new AccountCreator();
         creator.start();
-        AccountReader reader = new AccountReader();
+        assignments.three.AccountReader reader = new assignments.three.AccountReader();
         reader.start();
 
         boolean running = true;

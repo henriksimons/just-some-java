@@ -1,18 +1,17 @@
-package assignments.three;
+package assignments.four;
 
-import assignments.four.AccountServiceImpl;
 import assignments.one.Account;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-public class AccountReader2 implements Runnable {
+public class AccountReader implements Runnable {
 
-    private static final Logger LOGGER = Logger.getLogger(AccountReader2.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AccountReader.class.getName());
     private boolean running;
     private Thread thread;
 
-    public AccountReader2() {
+    public AccountReader() {
     }
 
     public void start() {

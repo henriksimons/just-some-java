@@ -3,8 +3,8 @@ package assignments.four;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import static assignments.four.Util.assertIdIsNotNull;
-import static assignments.four.Util.assertPersonId;
+import static assignments.four.Utils.assertIdIsNotNull;
+import static assignments.four.Utils.assertPersonId;
 
 public class PersonServiceImpl implements PersonService {
 

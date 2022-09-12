@@ -11,12 +11,17 @@ public class AccountTest {
 
     @Test
     public void testCreatingSingleAccount() {
-        Account account = ACCOUNT_FACTORY.createAccount("123");
+        Account account = ACCOUNT_FACTORY.createAccount("123", null);
         Assert.assertEquals(account.getId(), "123");
     }
 
     @Test
     public void testDuplicateAccount() {
-        assertThrows(RuntimeException.class, () -> ACCOUNT_FACTORY.createAccount("123"));
+        assertThrows(RuntimeException.class, () -> ACCOUNT_FACTORY.createAccount("123", null));
+    }
+
+    @Test
+    public void testCreatingAccountWithNoId() {
+        assertThrows(IllegalArgumentException.class, () -> Account.builder().build());
     }
 }

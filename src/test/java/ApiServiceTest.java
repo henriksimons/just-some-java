@@ -12,7 +12,7 @@ import java.util.Set;
 public class ApiServiceTest {
 
     private final String ACCOUNT_ID = "123";
-    private final Account ACCOUNT = new Account(ACCOUNT_ID);
+    private final Account ACCOUNT = Account.builder().id(ACCOUNT_ID).build();
     private final Set<Account> ACCOUNTS = Set.of(ACCOUNT);
     private final String PERSON_ID = "199901311234";
     private final Person PERSON = Person.builder().id(PERSON_ID).build();

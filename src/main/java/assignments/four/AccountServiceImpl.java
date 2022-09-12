@@ -7,8 +7,8 @@ import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import static assignments.four.Util.assertIdIsNotNull;
-import static assignments.four.Util.assertPersonIsNotNull;
+import static assignments.four.Utils.assertIdIsNotNull;
+import static assignments.four.Utils.assertPersonIsNotNull;
 
 public class AccountServiceImpl implements AccountService {
 
@@ -16,6 +16,7 @@ public class AccountServiceImpl implements AccountService {
     private static AccountService instance = null;
     private final HashMap<String, Account> ACCOUNTS_BY_ID = new HashMap<>();
     private final AccountFactory accountFactory = AccountFactory.getInstance();
+    private Set<Account> accountsCopy;
 
     private AccountServiceImpl() {
     }
@@ -32,8 +33,7 @@ public class AccountServiceImpl implements AccountService {
         assertIdIsNotNull(id);
         assertPersonIsNotNull(person);
         try {
-            Account account = accountFactory.createAccount(id);
-            account.setOwner(person);
+            Account account = accountFactory.createAccount(id, person);
             ACCOUNTS_BY_ID.put(account.getId(), account);
             return true;
         } catch (Exception e) {

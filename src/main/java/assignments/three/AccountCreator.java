@@ -40,7 +40,7 @@ public class AccountCreator implements Runnable {
             synchronized (accounts) {
                 try {
                     Thread.sleep(500);
-                    accounts.add(ACCOUNT_FACTORY.createAccount("#" + index++));
+                    accounts.add(ACCOUNT_FACTORY.createAccount("#" + index++, null));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

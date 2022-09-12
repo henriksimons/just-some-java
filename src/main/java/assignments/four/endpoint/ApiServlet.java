@@ -2,7 +2,7 @@ package assignments.four.endpoint;
 
 import assignments.four.AccountServiceImpl;
 import assignments.four.PersonServiceImpl;
-import assignments.four.Util;
+import assignments.four.Utils;
 import assignments.four.endpoint.model.CreateAccountRequestModel;
 import assignments.four.endpoint.model.GetAccountRequestModel;
 import assignments.four.endpoint.model.GetPersonRequestModel;
@@ -65,37 +65,41 @@ public class ApiServlet {
 
     private static void getAccountsForPerson(ApiService apiService, HttpExchange exchange) throws IOException {
         String bodyJsonString = getBodyJsonString(exchange);
-        GetPersonRequestModel requestModel = Util.getParser().fromJson(bodyJsonString, GetPersonRequestModel.class);
+        // TODO: 2022-09-12 Check if something is null before parsing...
+        GetPersonRequestModel requestModel = Utils.getParser().fromJson(bodyJsonString, GetPersonRequestModel.class);
         Set<Account> accounts = apiService.getAccounts(requestModel.getId());
         String response = accounts.toString();
 
         sendOkResponse(exchange, response);
     }
 
-    private static void createAccountForPerson(ApiService apiService, HttpExchange exchange) throws IOException {
-        String bodyJsonString = getBodyJsonString(exchange);
-        CreateAccountRequestModel requestModel = Util.getParser().fromJson(bodyJsonString, CreateAccountRequestModel.class);
-        apiService.createAccount(requestModel.getAccountId(), requestModel.getPersonId());
-        Account account = apiService.getAccount(requestModel.getAccountId());
-        String response = account.toString();
-        sendOkResponse(exchange, response);
+    private static String getBodyJsonString(HttpExchange exchange) {
+        InputStream bodyInputStream = getRequestBody(exchange);
+        return Utils.readInputStream(bodyInputStream);
     }
 
-    private static void getAccountById(ApiService apiService, HttpExchange exchange) throws IOException {
+    private static void createAccountForPerson(ApiService apiService, HttpExchange exchange) throws IOException {
         String bodyJsonString = getBodyJsonString(exchange);
-        GetAccountRequestModel requestModel = Util.getParser().fromJson(bodyJsonString, GetAccountRequestModel.class);
-        Account account = apiService.getAccount(requestModel.getId());
-        String response = account.toString();
-        sendOkResponse(exchange, response);
+        CreateAccountRequestModel requestModel = Utils.getParser().fromJson(bodyJsonString, CreateAccountRequestModel.class);
+        if (requestModel.getAccountId() == null || requestModel.getAccountId().length() == 0) {
+            sendBadRequestResponse(exchange, "Request parameter accountId can not be missing.");
+        } else {
+            apiService.createAccount(requestModel.getAccountId(), requestModel.getPersonId());
+            Account account = apiService.getAccount(requestModel.getAccountId());
+            String response = account.toString();
+            sendOkResponse(exchange, response);
+        }
     }
 
     private static boolean isGET(HttpExchange exchange) {
         return HttpMethod.GET.name().equals(exchange.getRequestMethod());
     }
 
-    private static String getBodyJsonString(HttpExchange exchange) {
-        InputStream bodyInputStream = getRequestBody(exchange);
-        return Util.readInputStream(bodyInputStream);
+    private static void sendBadRequestResponse(HttpExchange exchange, String message) throws IOException {
+        exchange.sendResponseHeaders(400, message.length());
+        OutputStream output = exchange.getResponseBody();
+        output.write(message.getBytes());
+        output.flush();
     }
 
     private static void sendOkResponse(HttpExchange exchange, String response) throws IOException {
@@ -107,6 +111,18 @@ public class ApiServlet {
 
     private static void sendMethodNotAllowedResponse(HttpExchange exchange) throws IOException {
         exchange.sendResponseHeaders(405, -1);
+    }
+
+    private static void getAccountById(ApiService apiService, HttpExchange exchange) throws IOException {
+        String bodyJsonString = getBodyJsonString(exchange);
+        GetAccountRequestModel requestModel = Utils.getParser().fromJson(bodyJsonString, GetAccountRequestModel.class);
+        if (requestModel.getId() == null || requestModel.getId().length() == 0) {
+            sendBadRequestResponse(exchange, "Request parameter id can not be missing.");
+        } else {
+            Account account = apiService.getAccount(requestModel.getId());
+            String response = account.toString();
+            sendOkResponse(exchange, response);
+        }
     }
 
     private static void sendInternalServerErrorResponse(HttpExchange exchange, Exception e) throws IOException {
