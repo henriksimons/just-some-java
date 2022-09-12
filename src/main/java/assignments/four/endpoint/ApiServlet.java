@@ -7,6 +7,7 @@ import assignments.four.endpoint.model.CreateAccountRequestModel;
 import assignments.four.endpoint.model.GetAccountRequestModel;
 import assignments.four.endpoint.model.GetPersonRequestModel;
 import assignments.one.Account;
+import assignments.one.AccountFactory;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
@@ -23,7 +24,7 @@ public class ApiServlet {
     private final ApiService apiService;
 
     public ApiServlet() {
-        this.apiService = new ApiServiceImpl(AccountServiceImpl.getInstance(), PersonServiceImpl.getInstance());
+        this.apiService = new ApiServiceImpl(new AccountServiceImpl(AccountFactory.getInstance()), PersonServiceImpl.getInstance());
         LOGGER.info("Starting RestService...");
     }
 
@@ -84,7 +85,10 @@ public class ApiServlet {
         if (requestModel.getAccountId() == null || requestModel.getAccountId().length() == 0) {
             sendBadRequestResponse(exchange, "Request parameter accountId can not be missing.");
         } else {
-            apiService.createAccount(requestModel.getAccountId(), requestModel.getPersonId());
+            boolean created = apiService.createAccount(requestModel.getAccountId(), requestModel.getPersonId());
+            if (!created) {
+                sendForbiddenResponse(exchange, "Account with id " + requestModel.getAccountId() + " already exists.");
+            }
             Account account = apiService.getAccount(requestModel.getAccountId());
             String response = account.toString();
             sendOkResponse(exchange, response);
@@ -97,6 +101,13 @@ public class ApiServlet {
 
     private static void sendBadRequestResponse(HttpExchange exchange, String message) throws IOException {
         exchange.sendResponseHeaders(400, message.length());
+        OutputStream output = exchange.getResponseBody();
+        output.write(message.getBytes());
+        output.flush();
+    }
+
+    private static void sendForbiddenResponse(HttpExchange exchange, String message) throws IOException {
+        exchange.sendResponseHeaders(403, message.length());
         OutputStream output = exchange.getResponseBody();
         output.write(message.getBytes());
         output.flush();

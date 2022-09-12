@@ -9,6 +9,8 @@ import org.mockito.Mockito;
 
 import java.util.Set;
 
+import static org.mockito.ArgumentMatchers.any;
+
 public class ApiServiceTest {
 
     private final String ACCOUNT_ID = "123";
@@ -16,9 +18,9 @@ public class ApiServiceTest {
     private final Set<Account> ACCOUNTS = Set.of(ACCOUNT);
     private final String PERSON_ID = "199901311234";
     private final Person PERSON = Person.builder().id(PERSON_ID).build();
-    private final AccountFactory accountFactory = Mockito.mock(AccountFactory.class);
     private final AccountService accountService = Mockito.mock(AccountServiceImpl.class);
     private final PersonService personService = Mockito.mock(PersonServiceImpl.class);
+    private final AccountFactory accountFactory = Mockito.mock(AccountFactory.class);
     private final ApiService apiService = new ApiServiceImpl(accountService, personService);
 
     @Test
@@ -50,21 +52,21 @@ public class ApiServiceTest {
     @Test
     public void testCreateAccountForPerson() {
         Mockito.when(personService.getPerson(Mockito.anyString())).thenReturn(PERSON);
-        Mockito.when(accountService.createAccount(Mockito.anyString(), Mockito.any())).thenReturn(true);
+        Mockito.when(accountService.createAccount(Mockito.anyString(), any())).thenReturn(true);
         Assert.assertTrue(apiService.createAccount(ACCOUNT_ID, PERSON_ID));
     }
 
     @Test
     public void testCreateAccountForPersonButAccountCreationFails() {
         Mockito.when(personService.getPerson(Mockito.anyString())).thenReturn(PERSON);
-        Mockito.when(accountService.createAccount(Mockito.anyString(), Mockito.any())).thenReturn(false);
+        Mockito.when(accountService.createAccount(Mockito.anyString(), any())).thenReturn(false);
         Assert.assertFalse(apiService.createAccount(ACCOUNT_ID, PERSON_ID));
     }
 
     @Test
     public void testCreateAccountForNullPerson() {
         Mockito.when(personService.getPerson(null)).thenCallRealMethod();
-        Mockito.when(accountService.createAccount(Mockito.anyString(), Mockito.any())).thenReturn(false);
+        Mockito.when(accountService.createAccount(Mockito.anyString(), any())).thenReturn(false);
         Assert.assertThrows(RuntimeException.class, () -> apiService.createAccount(ACCOUNT_ID, null));
     }
 
@@ -73,5 +75,16 @@ public class ApiServiceTest {
         Mockito.when(personService.getPerson(Mockito.anyString())).thenReturn(PERSON);
         Mockito.when(accountService.createAccount(null, PERSON)).thenCallRealMethod();
         Assert.assertThrows(RuntimeException.class, () -> apiService.createAccount(null, PERSON_ID));
+    }
+
+    @Test
+    public void testCreatingSeveralAccountsForPerson() {
+        AccountService accountService = new AccountServiceImpl(accountFactory);
+        ApiService apiService = new ApiServiceImpl(accountService, personService);
+        Mockito.when(personService.getPerson(Mockito.anyString())).thenReturn(PERSON);
+        Mockito.when(accountFactory.createAccount(Mockito.anyString(), Mockito.any())).thenCallRealMethod();
+        accountService.createAccount("1", PERSON);
+        accountService.createAccount("2", PERSON);
+        Assert.assertEquals(2, apiService.getAccounts(PERSON_ID).size());
     }
 }

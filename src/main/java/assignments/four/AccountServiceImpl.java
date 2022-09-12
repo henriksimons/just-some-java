@@ -13,19 +13,11 @@ import static assignments.four.Utils.assertPersonIsNotNull;
 public class AccountServiceImpl implements AccountService {
 
     private static final Logger LOGGER = Logger.getLogger(AccountServiceImpl.class.getName());
-    private static AccountService instance = null;
     private final HashMap<String, Account> ACCOUNTS_BY_ID = new HashMap<>();
-    private final AccountFactory accountFactory = AccountFactory.getInstance();
-    private Set<Account> accountsCopy;
+    private final AccountFactory accountFactory;
 
-    private AccountServiceImpl() {
-    }
-
-    public synchronized static AccountService getInstance() {
-        if (instance == null) {
-            instance = new AccountServiceImpl();
-        }
-        return instance;
+    public AccountServiceImpl(AccountFactory accountFactory) {
+        this.accountFactory = accountFactory;
     }
 
     @Override

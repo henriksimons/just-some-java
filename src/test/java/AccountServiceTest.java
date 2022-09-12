@@ -2,6 +2,7 @@ import assignments.four.AccountService;
 import assignments.four.AccountServiceImpl;
 import assignments.four.Person;
 import assignments.one.Account;
+import assignments.one.AccountFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,14 +14,7 @@ public class AccountServiceTest {
     private final String ACCOUNT_ID_4 = "a4";
     private final String PERSON_ID_1 = "p1";
     private final Person PERSON_1 = Person.builder().id(PERSON_ID_1).build();
-    private final AccountService accountService = AccountServiceImpl.getInstance();
-
-    @Test
-    public void testCreatingAccountService() {
-        AccountService accountService1 = AccountServiceImpl.getInstance();
-        AccountService accountService2 = AccountServiceImpl.getInstance();
-        Assert.assertEquals(accountService1, accountService2);
-    }
+    private final AccountService accountService = new AccountServiceImpl(AccountFactory.getInstance());
 
     @Test
     public void testCreatingAccount() {

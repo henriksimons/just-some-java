@@ -26,7 +26,7 @@ Example request body:
 
 Example successful response body: `Account{id='1', owner=Person{id='19990101XXXX'}}`
 
-If no accounts exits 500 Internal Server Error will be thrown with the following body: `No account with id {id} exists.`
+If an account already exists 403 Forbidden will be returned with the following body: `Account with id {id} already exists.`
 
 ## GET /account
 
@@ -39,7 +39,7 @@ Example request body:
 
 Example successful response body: `Account{id='1', owner=Person{id='19990101XXXX'}}`
 
-If no accounts exits 500 Internal Server Error will be thrown with the following body: `No account with id {id} exists.`
+If no accounts exits 500 Internal Server Error will be returned with the following body: `No account with id {id} exists.`
 
 ## GET /person
 
