@@ -1,6 +1,5 @@
 import assignments.four.endpoint.ApiServlet;
 import assignments.three.AccountCreator;
-import assignments.four.AccountReader;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -18,8 +17,6 @@ public class Main {
 
         //assignmentThree();
 
-        AccountReader accountReader = new AccountReader();
-        accountReader.start();
     }
 
     private static void assignmentThree() {
@@ -44,7 +41,7 @@ public class Main {
                 executionTime = System.currentTimeMillis() - startTime;
             }
         }
-        System.out.println("Stopped account creation after " + executionTime / 1000 + " ms.");
+        System.out.println("Stopped account creation after " + executionTime + " ms.");
         creator.kill();
         reader.kill();
     }
