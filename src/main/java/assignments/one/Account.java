@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Account implements Comparable<Account> {
 
     private final String id;
-    private Person owner; //Assuming every account must be owned by someone.
+    private Person owner; //Assuming every account must be owned by someone. Not added to constructor due to earlier assignments.
 
     public Account(String accountName) {
         this.id = accountName;

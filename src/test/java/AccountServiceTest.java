@@ -1,6 +1,7 @@
-import assignments.four.*;
+import assignments.four.AccountService;
+import assignments.four.AccountServiceImpl;
+import assignments.four.Person;
 import assignments.one.Account;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,8 +16,20 @@ public class AccountServiceTest {
     private final AccountService accountService = AccountServiceImpl.getInstance();
 
     @Test
+    public void testCreatingAccountService() {
+        AccountService accountService1 = AccountServiceImpl.getInstance();
+        AccountService accountService2 = AccountServiceImpl.getInstance();
+        Assert.assertEquals(accountService1, accountService2);
+    }
+
+    @Test
     public void testCreatingAccount() {
-        Assert.assertTrue(accountService.createAccount(ACCOUNT_ID_1, PERSON_1));
+        Assert.assertThrows(IllegalArgumentException.class, () -> accountService.createAccount(null, null));
+    }
+
+    @Test
+    public void testCreatingAccountWithNullId() {
+        Assert.assertThrows(IllegalArgumentException.class, () -> accountService.createAccount(null, PERSON_1));
     }
 
     @Test

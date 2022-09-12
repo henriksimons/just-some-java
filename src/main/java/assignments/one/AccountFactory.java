@@ -20,7 +20,6 @@ public class AccountFactory {
         return instance;
     }
 
-
     public Account createAccount(String name) {
 
         assertNotBlankOrNull(name);

@@ -1,6 +1,11 @@
 package assignments.four.endpoint;
 
+import assignments.four.AccountServiceImpl;
+import assignments.four.PersonServiceImpl;
 import assignments.four.Util;
+import assignments.four.endpoint.model.CreateAccountRequestModel;
+import assignments.four.endpoint.model.GetAccountRequestModel;
+import assignments.four.endpoint.model.GetPersonRequestModel;
 import assignments.one.Account;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
@@ -10,12 +15,19 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.Set;
+import java.util.logging.Logger;
 
-public class RestService {
+public class ApiServlet {
 
-    public static void start() throws IOException {
+    private static final Logger LOGGER = Logger.getLogger(ApiServlet.class.getName());
+    private final ApiService apiService;
 
-        ApiService apiService = new ApiService();
+    public ApiServlet() {
+        this.apiService = new ApiServiceImpl(AccountServiceImpl.getInstance(), PersonServiceImpl.getInstance());
+        LOGGER.info("Starting RestService...");
+    }
+
+    public void start() throws IOException {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
 
@@ -47,7 +59,7 @@ public class RestService {
             exchange.close();
         }));
 
-        server.setExecutor(null); // creates a default executor
+        server.setExecutor(null);
         server.start();
     }
 

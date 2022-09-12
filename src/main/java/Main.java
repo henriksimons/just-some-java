@@ -1,5 +1,4 @@
-import assignments.four.AccountServiceImpl;
-import assignments.four.endpoint.RestService;
+import assignments.four.endpoint.ApiServlet;
 import assignments.three.AccountCreator;
 import assignments.three.AccountReader;
 import assignments.three.AccountReader2;
@@ -15,7 +14,8 @@ public class Main {
 
         LOGGER.info("Running Main on thread: " + Thread.currentThread().getName());
 
-        RestService.start(); //Starts REST endpoint*/
+        ApiServlet apiServlet = new ApiServlet(); /*Starts REST endpoint*/
+        apiServlet.start();
 
         //assignmentThree();
 

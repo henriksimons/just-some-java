@@ -1,7 +1,6 @@
 import assignments.four.Person;
 import assignments.four.PersonService;
 import assignments.four.PersonServiceImpl;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,6 +13,13 @@ public class PersonServiceTest {
     private final Person PERSON_2 = Person.builder().id(PERSON_2_ID).build();
 
     private final PersonService personService = PersonServiceImpl.getInstance();
+
+    @Test
+    public void testCreatingAccountService() {
+        PersonService personService1 = PersonServiceImpl.getInstance();
+        PersonService personService2 = PersonServiceImpl.getInstance();
+        Assert.assertEquals(personService1, personService2);
+    }
 
     @Test
     public void testSavePerson() {

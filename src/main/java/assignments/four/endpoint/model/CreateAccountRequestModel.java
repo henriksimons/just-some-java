@@ -1,4 +1,4 @@
-package assignments.four.endpoint;
+package assignments.four.endpoint.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
