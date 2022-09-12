@@ -5,7 +5,7 @@ In your IDE, select the [Main](src/main/java/Main.java) -class, and press Ctrl +
 endpoint.
 
 Alternative 2:
-In your terminal/cmd, navigate to you project folder path and run "mvn clean install". Till will install the project on
+In your terminal/cmd, navigate to you project folder path and run "mvn clean install". This will install the project in
 you local .m2 repository assuming you have Maven installed. From there, navigate to .\.m2\repository\henrik\hb\1.0.0\
 and run the hb-1.0.0.jar -file.
 
