@@ -26,7 +26,6 @@ Example request body:
 
 Example successful response body: `Account{id='1', owner=Person{id='19990101XXXX'}}`
 
-RequestBody parameter accountId is mandatory and a missing value vill result in:
 If no accounts exits 500 Internal Server Error will be thrown with the following body: `No account with id {id} exists.`
 
 ## GET /account
