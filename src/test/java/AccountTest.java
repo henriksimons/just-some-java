@@ -1,9 +1,9 @@
 import assignments.one.Account;
 import assignments.one.AccountFactory;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AccountTest {
 
@@ -12,7 +12,7 @@ public class AccountTest {
     @Test
     public void testCreatingSingleAccount() {
         Account account = ACCOUNT_FACTORY.createAccount("123", null);
-        Assert.assertEquals(account.getId(), "123");
+        assertEquals(account.getId(), "123");
     }
 
     @Test

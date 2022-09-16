@@ -3,8 +3,10 @@ import assignments.four.AccountServiceImpl;
 import assignments.four.Person;
 import assignments.one.Account;
 import assignments.one.AccountFactory;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class AccountServiceTest {
 
@@ -18,39 +20,39 @@ public class AccountServiceTest {
 
     @Test
     public void testCreatingAccount() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> accountService.createAccount(null, null));
+        assertThrows(IllegalArgumentException.class, () -> accountService.createAccount(null, null));
     }
 
     @Test
     public void testCreatingAccountWithNullId() {
-        Assert.assertThrows(IllegalArgumentException.class, () -> accountService.createAccount(null, PERSON_1));
+        assertThrows(IllegalArgumentException.class, () -> accountService.createAccount(null, PERSON_1));
     }
 
     @Test
     public void testCreatingDuplicateAccount() {
-        Assert.assertTrue(accountService.createAccount(ACCOUNT_ID_2, PERSON_1));
-        Assert.assertFalse(accountService.createAccount(ACCOUNT_ID_2, PERSON_1));
+        assertTrue(accountService.createAccount(ACCOUNT_ID_2, PERSON_1));
+        assertFalse(accountService.createAccount(ACCOUNT_ID_2, PERSON_1));
     }
 
     @Test
     public void testCreatingAccountToNullPerson() {
-        Assert.assertThrows(RuntimeException.class, () -> accountService.createAccount(ACCOUNT_ID_3, null));
+        assertThrows(RuntimeException.class, () -> accountService.createAccount(ACCOUNT_ID_3, null));
     }
 
     @Test
     public void testCreatingNullAccountPerson() {
-        Assert.assertThrows(RuntimeException.class, () -> accountService.createAccount(null, PERSON_1));
+        assertThrows(RuntimeException.class, () -> accountService.createAccount(null, PERSON_1));
     }
 
     @Test
     public void testGettingNonExistingAccount() {
-        Assert.assertThrows(RuntimeException.class, () -> accountService.getAccount("0"));
+        assertThrows(RuntimeException.class, () -> accountService.getAccount("0"));
     }
 
     @Test
     public void testGettingExistingAccount() {
-        Assert.assertTrue(accountService.createAccount(ACCOUNT_ID_4, PERSON_1));
+        assertTrue(accountService.createAccount(ACCOUNT_ID_4, PERSON_1));
         Account expected = accountService.getAccount(ACCOUNT_ID_4);
-        Assert.assertEquals(expected, accountService.getAccount(ACCOUNT_ID_4));
+        assertEquals(expected, accountService.getAccount(ACCOUNT_ID_4));
     }
 }

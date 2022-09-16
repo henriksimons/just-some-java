@@ -1,8 +1,9 @@
 import assignments.four.Person;
 import assignments.four.PersonService;
 import assignments.four.PersonServiceImpl;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PersonServiceTest {
 
@@ -18,38 +19,38 @@ public class PersonServiceTest {
     public void testCreatingAccountService() {
         PersonService personService1 = PersonServiceImpl.getInstance();
         PersonService personService2 = PersonServiceImpl.getInstance();
-        Assert.assertEquals(personService1, personService2);
+        assertEquals(personService1, personService2);
     }
 
     @Test
     public void testSavePerson() {
-        Assert.assertTrue(personService.savePerson(PERSON_1));
+        assertTrue(personService.savePerson(PERSON_1));
     }
 
     @Test
     public void testSaveNull() {
-        Assert.assertThrows(RuntimeException.class, () -> personService.savePerson(null));
+        assertThrows(RuntimeException.class, () -> personService.savePerson(null));
     }
 
     @Test
     public void testSaveDuplicatePerson() {
-        Assert.assertTrue(personService.savePerson(PERSON_2));
-        Assert.assertFalse(personService.savePerson(PERSON_2));
+        assertTrue(personService.savePerson(PERSON_2));
+        assertFalse(personService.savePerson(PERSON_2));
     }
 
     @Test
     public void testGetPerson() {
-        Assert.assertEquals(PERSON_1, personService.getPerson(PERSON_1_ID));
+        assertEquals(PERSON_1, personService.getPerson(PERSON_1_ID));
     }
 
     @Test
     public void testGetNonExistingPerson() {
-        Assert.assertThrows(RuntimeException.class, () -> personService.getPerson(PERSON_1_ID));
+        assertThrows(RuntimeException.class, () -> personService.getPerson(PERSON_1_ID));
     }
 
     @Test
     public void testDeletePerson() {
-        Assert.assertTrue(personService.savePerson(PERSON_1));
-        Assert.assertTrue(personService.deletePerson(PERSON_1_ID));
+        assertTrue(personService.savePerson(PERSON_1));
+        assertTrue(personService.deletePerson(PERSON_1_ID));
     }
 }
